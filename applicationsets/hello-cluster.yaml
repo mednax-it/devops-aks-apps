@@ -16,7 +16,7 @@ spec:
       name: 'hello-cluster-{{server}}-{{env}}'
     spec:
       source:
-        repoURL: git@github.com:mednax-it/sdbi-aks-apps.git
+        repoURL: git@github.com:mednax-it/devops-aks-apps.git
         targetRevision: HEAD
         path: hello-cluster
         helm:
