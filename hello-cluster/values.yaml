@@ -2,7 +2,7 @@ image: zbrown/hello-crud
 
 deployment:
   spec:
-    replicas: 3
+    replicas: 1
 
 dev:
   keyvault_name: "sdbi-akv-eastus-dev"

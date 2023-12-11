@@ -23,15 +23,6 @@ spec:
             path: /health
             port: 80
         imagePullPolicy: Always
-        securityContext:
-          readOnlyRootFilesystem: false
-        resources:
-          requests:
-            cpu: "1.0"
-            memory: "1G"
-          limits:
-            cpu: "1.0"
-            memory: "1G"
         env:  
         - name: ENVIRONMENT
           value: {{ .Values.environment }}
