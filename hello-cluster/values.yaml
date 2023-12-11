@@ -1,4 +1,4 @@
-image: mednax.azurecr.io/mednax/hello-crud
+image: zbrown/hello-crud
 
 deployment:
   spec:
