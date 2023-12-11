@@ -7,11 +7,6 @@ spec:
   selector:
     matchLabels:
       app: {{ .Release.Name }} 
-  template:
-    metadata:
-      labels:
-        app: {{ .Release.Name }} 
-spec:
   revisionHistoryLimit: 1
   template:
     spec:
