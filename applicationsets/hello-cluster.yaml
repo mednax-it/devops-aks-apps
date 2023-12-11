@@ -13,7 +13,7 @@ spec:
 
   template:
     metadata:
-      name: 'hello-cluster-{{server}}-{{env}}'
+      name: 'hello-cluster-{{env}}'
     spec:
       source:
         repoURL: git@github.com:mednax-it/devops-aks-apps.git
