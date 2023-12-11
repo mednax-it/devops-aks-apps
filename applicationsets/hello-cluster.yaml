@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: hello-cluster
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+            version: 0.0.21
+            url: pdxclinicaldev.com
+            server: preprod-one
+
+  template:
+    metadata:
+      name: 'hello-cluster-{{server}}-{{env}}'
+    spec:
+      source:
+        repoURL: git@github.com:mednax-it/sdbi-aks-apps.git
+        targetRevision: HEAD
+        path: hello-cluster
+        helm:
+          parameters:
+            - name: sha
+              value: $ARGOCD_APP_REVISION
+          values: |
+            version: '{{version}}'
+            environment: '{{env}}'
+            url: '{{url}}'
+      destination:
+        name: '{{server}}'
+        namespace: '{{env}}'
+      project: default
+      syncPolicy:
+        automated:
+          selfHeal: true
