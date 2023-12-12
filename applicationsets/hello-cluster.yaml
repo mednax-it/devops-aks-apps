@@ -4,16 +4,14 @@ metadata:
   name: hello-cluster
 spec:
   generators:
-    - list:
-        elements:
-          - env: dev
-            version: 0.0.21
-            url: pdxclinicaldev.com
-            server: preprod-one
+    - clusterDecisionResource:
+        configMapRef: placement
+        name: single-replica-placement 
+        requeueAfterSeconds: 30
 
   template:
     metadata:
-      name: 'hello-cluster-{{env}}'
+      name: 'hello-cluster-{{.clusterName}}'
     spec:
       source:
         repoURL: git@github.com:mednax-it/devops-aks-apps.git
@@ -24,11 +22,11 @@ spec:
             - name: sha
               value: $ARGOCD_APP_REVISION
           values: |
-            version: '{{version}}'
-            environment: '{{env}}'
-            url: '{{url}}'
+            version: '0.0.21'
+            environment: 'dev'
+            url: 'example.com'
       destination:
-        name: '{{server}}'
+        name: '{{.clusterName}}'
         namespace: '{{env}}'
       project: default
       syncPolicy:
