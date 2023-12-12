@@ -13,23 +13,20 @@ spec:
 
   template:
     metadata:
-      name: 'hello-cluster-{{.clusterName}}'
+      name: 'hello-cluster-{{clusterName}}'
     spec:
       source:
         repoURL: git@github.com:mednax-it/devops-aks-apps.git
         targetRevision: HEAD
         path: hello-cluster
         helm:
-          parameters:
-            - name: sha
-              value: $ARGOCD_APP_REVISION
           values: |
             version: '0.0.21'
             environment: 'dev'
             url: 'example.com'
       destination:
-        name: '{{.clusterName}}'
-        namespace: '{{env}}'
+        name: '{{clusterName}}'
+        namespace: 'dev'
       project: default
       syncPolicy:
         syncOptions:
