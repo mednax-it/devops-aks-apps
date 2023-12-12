@@ -6,7 +6,9 @@ spec:
   generators:
     - clusterDecisionResource:
         configMapRef: placement
-        name: single-replica-placement 
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: single-replica-placement 
         requeueAfterSeconds: 30
 
   template:
