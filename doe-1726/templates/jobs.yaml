@@ -3,6 +3,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ printf "core-seed-%s" ((index .Values .Values.environment).images.sonio_core_seeding | trimPrefix "mednax.azurecr.io/sonio/sonio-core-seed:")}}
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=true
 spec:
   template:
     spec:
