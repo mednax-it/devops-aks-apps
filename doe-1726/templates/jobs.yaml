@@ -1,7 +1,8 @@
+
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: core-seed
+  name: {{ printf "core-seed-%s" ((index .Values .Values.environment).images.sonio_core_seeding | trimPrefix "mednax.azurecr.io/sonio/sonio-core-seed:")}}
 spec:
   template:
     spec:
