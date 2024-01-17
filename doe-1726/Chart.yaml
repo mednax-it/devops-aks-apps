@@ -1,0 +1,10 @@
+apiVersion: v2
+name: DOE-1726-Test
+version: 0.0.1
+appVersion: 1.0.0
+description: Sonio Components testing
+icon: https://www.sonio.app/logo192.png
+maintainers:
+  - name: Sonio
+    email: devops@mednax.com
+

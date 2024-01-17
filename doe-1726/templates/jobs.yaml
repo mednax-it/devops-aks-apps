@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: core-seed
+spec:
+  template:
+    spec:
+      containers:
+      - name: core-seed
+        image: "{{ (index .Values .Values.environment).images.sonio_core_seeding }}"
+        command: ["echo"]
+        args:
+          - "Job Created {{ now }}"
+      restartPolicy: Never
+  backoffLimit: 4

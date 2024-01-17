@@ -1,0 +1,3 @@
+dev:
+  images:
+    sonio_core_seeding: "mednax.azurecr.io/sonio/sonio-core-seed:v2.9.0-rc9"

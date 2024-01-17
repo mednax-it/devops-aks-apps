@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: doe-1726-rerun-job
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: single-replica-placement 
+        requeueAfterSeconds: 30
+
+  template:
+    metadata:
+      name: 'doe-1726-rerun-job-{{clusterName}}'
+    spec:
+      source:
+        repoURL: git@github.com:mednax-it/devops-aks-apps.git
+        targetRevision: HEAD
+        path: doe-1726
+        helm:
+          values: |
+            environment: 'dev'
+      destination:
+        name: '{{clusterName}}'
+        namespace: 'dev'
+      project: default
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          selfHeal: true
+          prune: true
