@@ -27,7 +27,7 @@ spec:
       destination:
         name: '{{clusterName}}'
         namespace: 'dev'
-      project: default
+      project: dev
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
