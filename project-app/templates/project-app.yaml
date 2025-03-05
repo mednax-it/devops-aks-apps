@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ printf "'%s-%s-aa'" .Values.directoryPath .Values.env }}
+spec:
+  generators:
+    - clusters:
+        selector:
+          matchLabels:
+            serverTag: {{ .Values.server }}
+  template:
+    metadata:
+      name: {{ substr 0 31 .Values.directoryPath | printf "'%s-%s-{{ name }}'" .Values.env }}
+    spec:
+      project: {{ .Values.env }} 
+      info:
+        - name: 'Azure Log Analytics:'
+          value: {{ print "'https://portal.azure.com#@ae2bff4d-4382-4532-b4a0-f1e5a9c874a8/blade/Microsoft_OperationsManagementSuite_Workspace/Logs.ReactView/resourceId/%2Fsubscriptions%2F" (index .Values .Values.env).subscription "%2Fresourcegroups%2F" (index .Values .Values.env).resource_group "%2Fproviders%2Fmicrosoft.operationalinsights%2Fworkspaces%2F" (index .Values .Values.env).ws_name "/source/LogsBlade.AnalyticsShareLinkToQuery/query/ContainerLog%0A%7C%20join%20kind%20%3D%20inner%20%28KubePodInventory%0A%20%20%20%20%7C%20project%20ContainerID%2C%20ServiceName%2C%20Namespace%0A%20%20%20%20%7C%20distinct%20%2A%0A%20%20%20%20%29%0A%20%20%20%20on%20ContainerID%0A%7C%20where%20TimeGenerated%20%3E%20ago%281h%29%0A%7C%20where%20ServiceName%20%3D%3D%20%22" .Values.directoryPath "%22%0A%7C%20where%20Namespace%20%3D%3D%20%22" .Values.env "%22%0A%7C%20project%20TimeGenerated%2C%20LogEntry%2C%20Namespace%0A%7C%20sort%20by%20TimeGenerated%20asc'" }}
+      source:
+        repoURL: git@github.com:mednax-it/sdbi-aks-apps.git
+        targetRevision: HEAD
+        path: {{ .Values.directoryPath }}
+        helm:
+          parameters:
+            - name: sha
+              value: $ARGOCD_APP_REVISION
+          values: |
+            Name: '{{ .Values.directoryPath}}'
+            version: '{{ .Values.version }}'
+            environment: '{{ .Values.env }}'
+            url: '{{ .Values.url }}'
+            aa: true
+      destination:
+        name: {{ printf "'{{ name }}'" }}
+        namespace: {{ .Values.env }} 
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true

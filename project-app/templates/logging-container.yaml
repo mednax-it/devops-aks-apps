@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ printf "'%s-logs-%s'" .Values.directoryPath .Values.env }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ printf "'%s-logs-%s'" .Values.directoryPath .Values.env }}
+  template:
+    metadata:
+      labels:
+        app: {{ printf "'%s-logs-%s'" .Values.directoryPath .Values.env }}
+        aadpodidbinding: aa-logging-container-binding
+        version: {{ (index .Values .Values.env).aa_logging_container_image_version}}
+    spec:
+      containers:
+      - name: {{ printf "'%s-logs-%s'" .Values.directoryPath .Values.env }}
+        image: mednax.azurecr.io/aa-logging-container:{{ (index .Values .Values.env).aa_logging_container_image_version }}
+        ports:
+        - containerPort: 80
+        env:
+          - name: NAMESPACE
+            value: {{ .Values.env }}
+          - name: WORKSPACE
+            value: {{ (index .Values .Values.env).workspace }}
+          - name: APP_NAME
+            value: {{ .Values.directoryPath }} 
+  revisionHistoryLimit: 1

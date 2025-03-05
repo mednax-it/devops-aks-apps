@@ -1,0 +1,24 @@
+dev:
+  aa_logging_container_image_version: 0.0.4
+  workspace: ff1cca19-6c5a-4d7d-b522-22570735c65c
+  subscription: 24df1984-169b-47a7-95bf-08a1d9434cb2
+  resource_group: mednaxclinicaldev
+  ws_name: azloganalytics-preprod01
+test:
+  aa_logging_container_image_version: 0.0.4
+  workspace: ff1cca19-6c5a-4d7d-b522-22570735c65c
+  subscription: 24df1984-169b-47a7-95bf-08a1d9434cb2
+  resource_group: mednaxclinicaldev
+  ws_name: azloganalytics-preprod01
+stage:
+  aa_logging_container_image_version: 0.0.4
+  workspace: ff1cca19-6c5a-4d7d-b522-22570735c65c
+  subscription: 24df1984-169b-47a7-95bf-08a1d9434cb2
+  resource_group: mednaxclinicaldev
+  ws_name: azloganalytics-preprod01
+prod:
+  aa_logging_container_image_version: 0.0.4
+  workspace: 4b219cdb-1d13-4e82-9ac4-a3f527a313ea
+  subscription: 5a6c1541-4adc-40a9-8ba8-1d6a6fc5b7b1
+  resource_group: mednaxclinical
+  ws_name: azloganalytics-prod01p
